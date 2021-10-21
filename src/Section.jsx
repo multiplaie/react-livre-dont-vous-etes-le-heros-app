@@ -1,6 +1,6 @@
 import { Component, React } from "react";
 import ReactMarkdown from 'react-markdown'
-import config from "../config.json";
+import config from "./config.json";
 
 export class Section extends Component{
 
