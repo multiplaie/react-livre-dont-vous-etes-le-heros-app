@@ -1,5 +1,6 @@
 import { Component, React } from "react";
 import ReactMarkdown from 'react-markdown'
+import config from "../config.json";
 
 export class Section extends Component{
 
@@ -16,7 +17,7 @@ export class Section extends Component{
 
     loadSection(id){
         // send HTTP request
-        fetch("http://192.168.0.42:5500/api/sections/"+id,{
+        fetch("http://"+config.api.host+":"+config.api.port+"/api/sections/"+id,{
             mode:'cors',
             method:"GET"
         })
