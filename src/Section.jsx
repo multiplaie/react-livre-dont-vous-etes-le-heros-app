@@ -1,6 +1,7 @@
 import { Component, React } from "react";
 import ReactMarkdown from 'react-markdown'
 import config from "./config.json";
+import axios from "axios";
 
 export class Section extends Component{
 
@@ -16,14 +17,13 @@ export class Section extends Component{
     }
 
     loadSection(id){
-        // send HTTP request
-        fetch("http://"+config.api.host+":"+config.api.port+"/api/sections/"+id,{
-            mode:'cors',
-            method:"GET"
-        })
-        .then(res => res.json())
-        // save it to the state
-        .then(res => this.setState(res));
+        axios.get("http://"+config.api.host+":"+config.api.port+"/api/sections/"+id)
+        .then(res => this.setState(res.data))
+        .then(res => {
+            if(this.state.hasOwnProperty('music'))
+                if(this.state.music.hasOwnProperty('main'))
+                    axios.get("http://"+config.vlc.host+":"+config.vlc.port+"/play?path="+this.state.music.main);
+        });
     }
     componentDidMount() {
         this.loadSection(1);
@@ -44,7 +44,7 @@ export class Section extends Component{
                         <hr />
                         <div className="row">
                         {this.state.next.map((element, n) => {
-                            return <div className="col"><button className="btn btn-lg btn-outline-primary fw-bold" key={n} onClick={()=>this.handleClick(element)}>{element}</button></div>
+                            return <div className="col" key={n} ><button className="btn btn-lg btn-outline-primary fw-bold" key={n} onClick={()=>this.handleClick(element)}>{element}</button></div>
                         })}  
                     </div>
                     </div>
