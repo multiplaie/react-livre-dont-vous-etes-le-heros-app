@@ -21,8 +21,8 @@ export class Section extends Component{
         .then(res => this.setState(res.data))
         .then(res => {
             if(this.state.hasOwnProperty('music'))
-                if(this.state.music.hasOwnProperty('main'))
-                    axios.get("http://"+config.vlc.host+":"+config.vlc.port+"/play?path="+this.state.music.main);
+                if(this.state.music.hasOwnProperty('main') && this.state.music.main)
+                    axios.get("http://"+config.vlc.host+":"+config.vlc.port+"/vlc/play?path="+this.state.music.main);
         });
     }
     componentDidMount() {
